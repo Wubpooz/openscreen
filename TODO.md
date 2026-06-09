@@ -18,11 +18,11 @@
   - [ ] Decode → GPU composite → HW encode → mux pipeline
   - [ ] Per-platform priority table covering VideoToolbox (macOS), NVENC / AMF / Quick Sync (Windows), VAAPI (Linux), and a libx264 software fallback.
   - [ ] finalizeNativeWindowsRecording in src/hooks/useScreenRecorder.ts reads the entire on-disk screen recording back into renderer memory via window.electronAPI.readBinaryFile(nativeScreenPath) and ships those bytes to the main process via storeRecordedSession. 
-- [ ] Add a dedicated main-process IPC handler (e.g. attach-webcam-to-screen-recording) that accepts:
+- [ ] [stream native-capture webcam to disk to prevent OOM crash on stop](https://github.com/siddharthvaddem/openscreen/pull/687). Add a dedicated main-process IPC handler (e.g. attach-webcam-to-screen-recording) that accepts:
   - [ ] The native screen file path (already on disk)
   - [ ] The webcam sidecar file name / whether it is streamed
   - [ ] A small duration-fixed webcam blob buffer (only when not streamed)
-  - [ ] he main process reads, patches, and merges the files itself — the renderer never marshals the multi-GB screen bytes over IPC.
+  - [ ] The main process reads, patches, and merges the files itself — the renderer never marshals the multi-GB screen bytes over IPC.
   - [ ] readBinaryFile(nativeScreenPath) is removed from the renderer finalize path
   - [ ] A main-process handler owns the screen + webcam disk merge/patch
   - [ ] Renderer only marshals small in-memory webcam data (if any)
